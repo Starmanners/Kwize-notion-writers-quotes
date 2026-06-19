@@ -14,6 +14,7 @@
       src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times&color=000000&background=ffffff&uid=1752&fid=writing&dy=0"
       frameborder="0"
       loading="lazy"
+      title="Kwize Quote of the Day"
     ></iframe>
   </div>
 
@@ -25,8 +26,10 @@
       const frame = document.getElementById("kwize-frame");
       const isDark = prefersDark.matches;
 
+      // Use white text for dark mode, black for light mode
       const textColor = isDark ? "ffffff" : "000000";
-      const bgColor = "00000000"; // transparent
+      // Keep background white - we'll make it transparent via CSS overlay
+      const bgColor = "ffffff";
 
       frame.src =
         "https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times" +
