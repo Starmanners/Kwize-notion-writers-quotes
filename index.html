@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <div class="quote-wrapper">
+  <div class="quote-container">
     <iframe
       id="kwize-frame"
       src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times&color=000000&background=ffffff&uid=1752&fid=writing&dy=0"
@@ -26,10 +26,9 @@
       const frame = document.getElementById("kwize-frame");
       const isDark = prefersDark.matches;
 
-      // Use white text for dark mode, black for light mode
-      const textColor = isDark ? "ffffff" : "000000";
-      // Keep background white - we'll make it transparent via CSS overlay
-      const bgColor = "ffffff";
+      // Use contrasting colors: white text for dark mode, dark text for light mode
+      const textColor = isDark ? "ffffff" : "1a1a1a";
+      const bgColor = "transparent";
 
       frame.src =
         "https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times" +
