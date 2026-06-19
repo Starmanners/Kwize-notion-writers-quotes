@@ -11,7 +11,7 @@
   <div class="quote-container">
     <iframe
       id="kwize-frame"
-      src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times&color=000000&background=ffffff&uid=1752&fid=writing&dy=0"
+      src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times&color=ffffff&background=1a1a1a&uid=1752&fid=writing&dy=0"
       frameborder="0"
       loading="lazy"
       title="Kwize Quote of the Day"
@@ -22,13 +22,28 @@
     // Detect dark mode
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
+    console.log("Initial dark mode check:", prefersDark.matches);
+
     function updateColors() {
       const frame = document.getElementById("kwize-frame");
       const isDark = prefersDark.matches;
 
-      // Use contrasting colors: white text for dark mode, dark text for light mode
-      const textColor = isDark ? "ffffff" : "1a1a1a";
-      const bgColor = "transparent";
+      console.log("Updating colors - Dark mode:", isDark);
+
+      // Kwize API requires hex colors without #
+      // For dark mode: white text on dark background
+      // For light mode: dark text on light background
+      let textColor, bgColor;
+      
+      if (isDark) {
+        textColor = "ffffff"; // white text
+        bgColor = "1a1a1a";   // dark background
+      } else {
+        textColor = "000000"; // black text
+        bgColor = "f5f5f5";   // light background
+      }
+
+      console.log("Colors set to - Text:", textColor, "BG:", bgColor);
 
       frame.src =
         "https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times" +
