@@ -13,6 +13,8 @@
       id="kwize-frame"
       src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=Times&color=ffffff&background=1a1a1a&uid=1752&fid=writing&dy=0"
       frameborder="0"
+      allow="fullscreen"
+      referrerpolicy="no-referrer"
       loading="lazy"
       title="Kwize Quote of the Day"
     ></iframe>
@@ -21,18 +23,16 @@
   <script>
     // Detect dark mode
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+    const frame = document.getElementById("kwize-frame");
 
     console.log("Initial dark mode check:", prefersDark.matches);
 
     function updateColors() {
-      const frame = document.getElementById("kwize-frame");
       const isDark = prefersDark.matches;
 
       console.log("Updating colors - Dark mode:", isDark);
 
       // Kwize API requires hex colors without #
-      // For dark mode: white text on dark background
-      // For light mode: dark text on light background
       let textColor, bgColor;
       
       if (isDark) {
@@ -54,6 +54,33 @@
 
     updateColors();
     prefersDark.addEventListener("change", updateColors);
+
+    // Handle Notion embed responsiveness
+    function resizeFrame() {
+      try {
+        // Calculate proper height for responsive content
+        const container = document.querySelector(".quote-container");
+        const height = container.scrollHeight || 300;
+        
+        // Send message to parent if in iframe (Notion)
+        if (window.self !== window.top) {
+          window.parent.postMessage(
+            { type: "RESIZE", height: height },
+            "*"
+          );
+        }
+      } catch (e) {
+        console.log("Resize message not needed");
+      }
+    }
+
+    // Resize on load and when content changes
+    window.addEventListener("load", resizeFrame);
+    window.addEventListener("resize", resizeFrame);
+    
+    // Observe for content changes
+    const observer = new MutationObserver(resizeFrame);
+    observer.observe(document.body, { childList: true, subtree: true });
   </script>
 </body>
 </html>

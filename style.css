@@ -6,7 +6,7 @@
 
 html, body {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
 }
 
 /* Light mode */
@@ -27,27 +27,56 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .quote-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: auto;
+  min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 iframe {
   width: 100%;
-  height: 100%;
+  max-width: 100vw;
+  height: auto;
+  aspect-ratio: 16 / 9;
   border: none;
   background: transparent;
+  border-radius: 8px;
 }
 
 /* Mobile optimization */
 @media (max-width: 768px) {
-  body {
-    padding: 16px;
+  .quote-container {
+    padding: 12px;
+    min-height: 250px;
+  }
+
+  iframe {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Notion embed optimization */
+@media (max-width: 600px) {
+  iframe {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .quote-container {
+    padding: 30px;
+  }
+
+  iframe {
+    aspect-ratio: 16 / 9;
   }
 }
